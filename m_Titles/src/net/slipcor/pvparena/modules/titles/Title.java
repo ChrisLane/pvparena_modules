@@ -63,9 +63,9 @@ public final class Title {
      * @param message the message to send
      */
     private static void send(final Arena a, final Player p, final String message) {
-        p.sendTitle("",
+        /*p.sendTitle("",
                 ChatColor.valueOf(a.getArenaConfig().getString(
-                        CFG.MODULES_TITLES_COLOR)) + message);
+                        CFG.MODULES_TITLES_COLOR)) + message);*/
     }
 
 }

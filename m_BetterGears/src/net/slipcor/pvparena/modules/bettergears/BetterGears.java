@@ -22,7 +22,6 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
-import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
@@ -266,35 +265,26 @@ public class BetterGears extends ArenaModule {
                 (!arena.getArenaConfig().getBoolean(CFG.MODULES_BETTERGEARS_ONLYIFLEATHER) ||
                         ap.get().getInventory().getHelmet() != null &&
                                 ap.get().getInventory().getHelmet().getType().name().contains("LEATHER"))) {
-            if (!tryReplace(EquipmentSlot.HEAD, ap.get(), isArmor[0])){
-                ap.get().getInventory().setHelmet(isArmor[0]);
-            }
+            ap.get().getInventory().setBoots(isArmor[0]);
         }
         if (arena.getArenaConfig().getBoolean(CFG.MODULES_BETTERGEARS_CHEST) &&
                 (!arena.getArenaConfig().getBoolean(CFG.MODULES_BETTERGEARS_ONLYIFLEATHER) ||
                         ap.get().getInventory().getChestplate() != null &&
                                 ap.get().getInventory().getChestplate().getType().name().contains("LEATHER"))) {
-            if (!tryReplace(EquipmentSlot.CHEST, ap.get(), isArmor[1])) {
-                ap.get().getInventory().setChestplate(isArmor[1]);
-            }
+            ap.get().getInventory().setBoots(isArmor[1]);
         }
         if (arena.getArenaConfig().getBoolean(CFG.MODULES_BETTERGEARS_LEG) &&
                 (!arena.getArenaConfig().getBoolean(CFG.MODULES_BETTERGEARS_ONLYIFLEATHER) ||
                         ap.get().getInventory().getLeggings() != null &&
                                 ap.get().getInventory().getLeggings().getType().name().contains("LEATHER"))) {
-            if (!tryReplace(EquipmentSlot.LEGS, ap.get(), isArmor[2])) {
-                ap.get().getInventory().setLeggings(isArmor[2]);
-            }
+            ap.get().getInventory().setBoots(isArmor[2]);
         }
         if (arena.getArenaConfig().getBoolean(CFG.MODULES_BETTERGEARS_FOOT) &&
                 (!arena.getArenaConfig().getBoolean(CFG.MODULES_BETTERGEARS_ONLYIFLEATHER) ||
                         ap.get().getInventory().getBoots() != null &&
                                 ap.get().getInventory().getBoots().getType().name().contains("LEATHER"))) {
-            if (!tryReplace(EquipmentSlot.FEET, ap.get(), isArmor[3])) {
-                ap.get().getInventory().setBoots(isArmor[3]);
-            }
+            ap.get().getInventory().setBoots(isArmor[3]);
         }
-        ap.get().updateInventory();
     }
 
     private Map<ArenaTeam, Short[]> getColorMap() {
@@ -465,54 +455,5 @@ public class BetterGears extends ArenaModule {
             getColorMap().put(t, s);
             debug.i(t.getName() + " : " + StringParser.joinArray(s, ","));
         }
-    }
-
-    private boolean tryReplace(EquipmentSlot slot, Player player, ItemStack setItem) {
-        ItemStack checkItem;
-        switch (slot) {
-            case HEAD:
-                checkItem = player.getInventory().getHelmet();
-                break;
-            case CHEST:
-                checkItem = player.getInventory().getChestplate();
-                break;
-            case LEGS:
-                checkItem = player.getInventory().getLeggings();
-                break;
-            case FEET:
-                checkItem = player.getInventory().getBoots();
-                break;
-            default:
-                checkItem = null;
-        }
-
-        if (checkItem == null || checkItem.getType() == Material.AIR) {
-            return false;
-        }
-        if (checkItem.getEnchantments() == null || checkItem.getEnchantments().isEmpty()) {
-            return false;
-        }
-        if (checkItem.getType() == setItem.getType()) {
-            LeatherArmorMeta checkMeta =  (LeatherArmorMeta) checkItem.getItemMeta();
-            LeatherArmorMeta setMeta = (LeatherArmorMeta) setItem.getItemMeta();
-            checkMeta.setColor(setMeta.getColor());
-            checkItem.setItemMeta(checkMeta);
-            switch (slot) {
-                case HEAD:
-                    player.getInventory().setHelmet(checkItem);
-                    return true;
-                case CHEST:
-                    player.getInventory().setChestplate(checkItem);
-                    return true;
-                case LEGS:
-                    player.getInventory().setLeggings(checkItem);
-                    return true;
-                case FEET:
-                    player.getInventory().setBoots(checkItem);
-                    return true;
-                default:
-            }
-        }
-        return false;
     }
 }

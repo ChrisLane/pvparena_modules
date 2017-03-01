@@ -84,7 +84,7 @@ public class ChestFiller extends ArenaModule {
             }
             Player player = (Player) sender;
 
-            Block b = player.getTargetBlock((Set<Material>)null, 10);
+            Block b = player.getTargetBlock(null, 10);
             if (b.getType() != Material.CHEST && b.getType() != Material.TRAPPED_CHEST) {
                 arena.msg(sender,
                         Language.parse(arena, MSG.ERROR_NO_CHEST));
@@ -105,7 +105,7 @@ public class ChestFiller extends ArenaModule {
             }
             Player player = (Player) sender;
 
-            Block b = player.getTargetBlock((Set<Material>)null, 10);
+            Block b = player.getTargetBlock(null, 10);
             if (b.getType() != Material.CHEST && b.getType() != Material.TRAPPED_CHEST) {
                 arena.msg(sender,
                         Language.parse(arena, MSG.ERROR_NO_CHEST));
